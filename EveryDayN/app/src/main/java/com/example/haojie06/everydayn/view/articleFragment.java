@@ -160,26 +160,7 @@ new Thread(new Runnable() {
 
     private void saveArticle(Articles art)
     {
-        ArrayList<Articles> arrayList = new ArrayList<Articles>();
-           FileOutputStream fOut = null;
-        ObjectOutputStream oOut = null;
-        try {
-            fOut = new FileOutputStream("hello.txt");
-           // fOut = getActivity().openFileOutput("Art",Context.MODE_PRIVATE);
-            oOut = new ObjectOutputStream(fOut);
-            oOut.writeObject(art);
-
-        }catch (IOException ex){ex.printStackTrace();}
-        finally {
-            try {
-
-            if (oOut != null)
-            oOut.close();
-            if (fOut != null)
-            fOut.close();
-
-        }catch (IOException ex){ex.printStackTrace();}
-    }
+        art.save();
 }
 }
 

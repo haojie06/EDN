@@ -1,12 +1,14 @@
 package com.example.haojie06.everydayn.object;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
  * Created by haojie06 on 2018/3/25.
  */
 
-public class Articles implements Serializable {
+public class Articles extends DataSupport implements Serializable{
     private String title;
     private String name;
     private String content;
@@ -20,8 +22,6 @@ public class Articles implements Serializable {
         this.title = title;
         this.name = name;
         this.content = content;
-        this.time = time;
-        this.aUrl = aUrl;
     }
 
     public String getTitle() {
@@ -36,9 +36,6 @@ public class Articles implements Serializable {
         return content;
     }
 
-    public String getTime() {
-        return time;
-    }
 
 
     public void setTitle(String title) {
@@ -53,17 +50,8 @@ public class Articles implements Serializable {
         this.content = content;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
-    public String getaUrl() {
-        return aUrl;
-    }
 
-    public void setaUrl(String aUrl) {
-        this.aUrl = aUrl;
-    }
 
 
 }

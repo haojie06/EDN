@@ -36,12 +36,9 @@ public class webGet {
             //从一个URL加载一个Document对象。
             Document doc = Jsoup.connect(url).get();
             Document doc2 = Jsoup.connect(url).get();
-            //选择“美食天下”所在节点
             Element He = doc.getElementById("article_show");
             Elements mainArticle = doc.select("div.article_text");
 
-            //打印 <a>标签里面的title
-            Log.e("！！！！！！qqqq、", "连接成功");
             Log.e("！！！！！！qqqq、", "连接成功");
             Log.e("text",mainArticle.text());
             ar.setContent(mainArticle.text());

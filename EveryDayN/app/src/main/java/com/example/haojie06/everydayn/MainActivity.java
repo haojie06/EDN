@@ -30,6 +30,8 @@ import com.example.haojie06.everydayn.view.ArticleCatalog;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
+import org.litepal.LitePal;
+import org.litepal.tablemanager.Connector;
 
 import java.lang.reflect.Field;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         initView();
         initData();
+
 
     }
 
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity  {
     }
     private  void initData()
     {
+        LitePal.initialize(this);
+        Connector.getDatabase();
         FPagerAdapter adapter = new FPagerAdapter(getSupportFragmentManager());
         mVierPager.setAdapter(adapter);
         mTab.setupWithViewPager(mVierPager);
