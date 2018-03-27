@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#FFBA55"
+android:gravity="center"
+    >
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipe_refresh"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+<android.support.v4.widget.NestedScrollView
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@android:color/white"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/artTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AAAAAAAAAAA"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:scrollbars="vertical"
+            android:singleLine="false"/>
+
+        <TextView
+            android:id="@+id/artAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="MAAAAAAA"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:scrollbars="vertical"
+            android:singleLine="false"/>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/artTextV"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:scrollbars="vertical"
+            android:singleLine="false"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15dp"
+            android:visibility="invisible"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            app:elevation="18dp"
+            android:src="@drawable/ic_fab_icon"
+            app:fabSize="normal"
+            app:rippleColor="@color/colorNoti"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
