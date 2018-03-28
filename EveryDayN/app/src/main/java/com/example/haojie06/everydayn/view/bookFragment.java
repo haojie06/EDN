@@ -18,7 +18,7 @@ import com.example.haojie06.everydayn.util.BaseFragment;
  * Created by haojie06 on 2018/3/25.
  */
 
-public class bookFragment extends BaseFragment {
+public class BookFragment extends BaseFragment {
     View mView;
     @Override
     protected void loadData() {

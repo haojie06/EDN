@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorTitle">#ffffff</color>
     <color name="colorNoti">#2c87db</color>
+    <color name="purp">#602cdb</color>
+    <color name="deepBlue">#044988</color>
+    <color name="shadowBlue">#45a0f4</color>
+
 </resources>

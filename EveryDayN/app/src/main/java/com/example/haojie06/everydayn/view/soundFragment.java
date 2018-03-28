@@ -2,28 +2,81 @@ package com.example.haojie06.everydayn.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ThemedSpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.haojie06.everydayn.R;
+import com.example.haojie06.everydayn.adapter.SoundAdapter;
+import com.example.haojie06.everydayn.object.Sound;
 import com.example.haojie06.everydayn.util.BaseFragment;
+import com.example.haojie06.everydayn.util.webGet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by haojie06 on 2018/3/25.
  */
 
-public class soundFragment extends BaseFragment {
+public class SoundFragment extends BaseFragment {
+
+    private ArrayList<Sound> soundList = new ArrayList<Sound>();
+    private Sound sound = new Sound();
+    private SoundAdapter soundAdapter;
+    RecyclerView recyclerView;
     View mView;
-   // Context mContex = getContext();
+    webGet soundGet;
+    private Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+         switch (msg.what){
+             case 3:
+                 Bundle bundle;
+                 bundle =  msg.getData();
+                 soundList = bundle.getParcelableArrayList("bundle");
+                 soundAdapter = new SoundAdapter(soundList);
+                 recyclerView.setAdapter(soundAdapter);
+                 break;
+
+         }
+        }
+    };
+
+
     @Override
     protected void loadData() {
-        Toast.makeText(mContext,"书架会出现在这里",Toast.LENGTH_SHORT).show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Sound> soundList;
+                soundGet = new webGet("http://voice.meiriyiwen.com/voice/past?page=1");
+               soundList =  soundGet.soundGet();
+               for (Sound sound : soundList)
+               {
+                   Log.e("qqqqqqqqqq",sound.getSoundAuthor());
+               }
+               Message message = new Message();
+               message.what = 3;
+               Bundle bundle = new Bundle();
+               bundle.putParcelableArrayList("bundle",soundList);
+               message.setData(bundle);
+               handler.sendMessage(message);
+            }
+        }).start();
     }
 
  /*   @Override
@@ -41,6 +94,10 @@ public class soundFragment extends BaseFragment {
         {
             mView = inflater.inflate(R.layout.view_two,null);//第二个参数？
         }
+        loadData();
+        recyclerView = (RecyclerView) mView.findViewById(R.id.sound_recyclerview);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
+        recyclerView.setLayoutManager(layoutManager);
 
         return mView;
     }

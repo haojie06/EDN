@@ -1,8 +1,8 @@
 package com.example.haojie06.everydayn.util;
 
-import com.example.haojie06.everydayn.view.articleFragment;
-import com.example.haojie06.everydayn.view.bookFragment;
-import com.example.haojie06.everydayn.view.soundFragment;
+import com.example.haojie06.everydayn.view.ArticleFragment;
+import com.example.haojie06.everydayn.view.BookFragment;
+import com.example.haojie06.everydayn.view.SoundFragment;
 
 import java.util.HashMap;
 
@@ -19,11 +19,11 @@ public class FragmentFactor {
 
         if (baseFragment == null){//多态
             switch (pos){
-                case 0: baseFragment = new articleFragment();
+                case 0: baseFragment = new ArticleFragment();
                 break;
-                case 1: baseFragment = new soundFragment();
+                case 1: baseFragment = new SoundFragment();
                 break;
-                case 2: baseFragment = new bookFragment();
+                case 2: baseFragment = new BookFragment();
                 break;
             }
             mBaseFragments.put(pos,baseFragment);

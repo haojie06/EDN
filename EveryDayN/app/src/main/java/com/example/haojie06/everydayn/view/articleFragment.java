@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Created by haojie06 on 2018/3/25.
  */
 
-public class articleFragment extends BaseFragment {
+public class ArticleFragment extends BaseFragment {
     FloatingActionButton fab;
     SwipeRefreshLayout swipeRefreshLayout;
     View mView ;
@@ -52,7 +52,6 @@ public class articleFragment extends BaseFragment {
                     articleText = (TextView) mView.findViewById(R.id.artTextV);
                     titleText = (TextView) mView.findViewById(R.id.artTitle);
                     nameText = (TextView) mView.findViewById(R.id.artAuthor);
-                    Log.i("handler","成功接收");
                     articleText.setText("    " + articles.getContent());
                     titleText.setText(articles.getTitle());
                     nameText.setText(articles.getName());
@@ -62,7 +61,6 @@ public class articleFragment extends BaseFragment {
                 case 2:
                     isNeedDownload = true;
                     Articles ranArticle =(Articles) msg.obj;
-                    Log.i("handler","成功接收");
                     swipeRefreshLayout.setRefreshing(false);
                     articleText.setText("    " + ranArticle.getContent());
                     titleText.setText(ranArticle.getTitle());
@@ -88,7 +86,7 @@ public class articleFragment extends BaseFragment {
                 refreshArticle();
             }
         });
-
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#3333CC"),Color.parseColor("#00CCFF"));
         //点击收藏按钮将文章下载到本地
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +98,6 @@ public class articleFragment extends BaseFragment {
                     saveAer.setTitle((String) titleText.getText());
                     saveAer.setName((String) nameText.getText());
                     saveAer.setContent((String) articleText.getText());
-                    Log.e("-------标题栏里面有",(String) titleText.getText());
                     saveArticle(saveAer);
                 }else {Toast.makeText(getContext(), "文章已下载，不要再点啦！", Toast.LENGTH_SHORT).show();}
             }
@@ -121,7 +118,7 @@ new Thread(new Runnable() {
                 Articles result;
                 String getUrl = "https://meiriyiwen.com/";
                 webGet we = new webGet(getUrl);
-                result = we.web();
+                result = we.articleGet();
                 Message message = new Message();
                 message.what = 1;
                 message.obj = result;
@@ -145,7 +142,7 @@ new Thread(new Runnable() {
                 Articles ranArticle = new Articles();
                 String getUrl = "https://meiriyiwen.com/random";
                 webGet newGet = new webGet(getUrl);
-                ranArticle = newGet.web();
+                ranArticle = newGet.articleGet();
                 Message message = new Message();
                 message.what = 2;
                 message.obj = ranArticle;
