@@ -23,7 +23,17 @@ import com.example.haojie06.everydayn.R;
 import com.example.haojie06.everydayn.object.Articles;
 import com.example.haojie06.everydayn.util.BaseFragment;
 import com.example.haojie06.everydayn.util.webGet;
-
+import com.scwang.smartrefresh.header.BezierCircleHeader;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
+import com.scwang.smartrefresh.header.WaterDropHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.header.waterdrop.*;
+import com.scwang.smartrefresh.layout.footer.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -61,7 +71,7 @@ public class ArticleFragment extends BaseFragment {
                 case 2:
                     isNeedDownload = true;
                     Articles ranArticle =(Articles) msg.obj;
-                    swipeRefreshLayout.setRefreshing(false);
+                //    swipeRefreshLayout.setRefreshing(false);
                     articleText.setText("    " + ranArticle.getContent());
                     titleText.setText(ranArticle.getTitle());
                     nameText.setText(ranArticle.getName());
@@ -77,16 +87,22 @@ public class ArticleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.view_one,container,false);
         fab = mView.findViewById(R.id.fab);
-        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            //下拉刷新文章
+        RefreshLayout refreshLayout = (RefreshLayout) mView.findViewById(R.id.swipe_refresh);
+        refreshLayout.setRefreshHeader(new BezierCircleHeader(getContext()));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(RefreshLayout refreshlayout) {
+
                 refreshArticle();
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
-        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#3333CC"),Color.parseColor("#00CCFF"));
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
         //点击收藏按钮将文章下载到本地
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +163,7 @@ new Thread(new Runnable() {
                 message.what = 2;
                 message.obj = ranArticle;
                 try{
-                    Thread.sleep(600);
+                    Thread.sleep(1000);
                 }catch (InterruptedException ex){ex.printStackTrace();}
                 handler.sendMessage(message);
 

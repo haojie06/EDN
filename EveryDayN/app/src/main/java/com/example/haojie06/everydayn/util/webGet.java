@@ -64,12 +64,14 @@ public class webGet {
 
     }
 
-    public ArrayList<Sound> soundGet()
+    public ArrayList<Sound> soundGet(int page)
     {
+
+        String getUrl = "http://voice.meiriyiwen.com/voice/past?page=" + String.valueOf(page);
         ArrayList<Sound> soundList = new ArrayList<Sound>();
         Document doc = null;
         try {
-             doc = Jsoup.connect(url).get();
+             doc = Jsoup.connect(getUrl).get();
              Elements soundLinks = doc.select("div.list_box");
            //  Elements picLinks = doc.select("img[src]");
              for(Element e : soundLinks)

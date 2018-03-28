@@ -4,10 +4,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="#FFBA55"
+android:background="#ffffff"
 android:gravity="center"
     >
-<android.support.v4.widget.SwipeRefreshLayout
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/swipe_refresh"
@@ -76,6 +76,6 @@ android:gravity="center"
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

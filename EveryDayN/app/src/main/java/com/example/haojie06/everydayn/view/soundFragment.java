@@ -23,6 +23,11 @@ import com.example.haojie06.everydayn.adapter.SoundAdapter;
 import com.example.haojie06.everydayn.object.Sound;
 import com.example.haojie06.everydayn.util.BaseFragment;
 import com.example.haojie06.everydayn.util.webGet;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,7 @@ import java.util.List;
  */
 
 public class SoundFragment extends BaseFragment {
-
+    private int curPage = 1;
     private ArrayList<Sound> soundList = new ArrayList<Sound>();
     private Sound sound = new Sound();
     private SoundAdapter soundAdapter;
@@ -45,14 +50,20 @@ public class SoundFragment extends BaseFragment {
         public void handleMessage(Message msg) {
          switch (msg.what){
              case 3:
-                 Bundle bundle;
-                 bundle =  msg.getData();
-                 soundList = bundle.getParcelableArrayList("bundle");
+                 Bundle bundle1;
+                 bundle1 =  msg.getData();
+                 soundList = bundle1.getParcelableArrayList("bundle");
                  soundAdapter = new SoundAdapter(soundList);
                  recyclerView.setAdapter(soundAdapter);
                  break;
-
+             case 4:
+                 Bundle bundle2 = msg.getData();
+                 ArrayList<Sound> addList = bundle2.getParcelableArrayList("bundle2");
+                 soundList.addAll(addList);
+                 soundAdapter.notifyItemRangeChanged(12 * curPage,12);
+                 break;
          }
+
         }
     };
 
@@ -64,7 +75,7 @@ public class SoundFragment extends BaseFragment {
             public void run() {
                 ArrayList<Sound> soundList;
                 soundGet = new webGet("http://voice.meiriyiwen.com/voice/past?page=1");
-               soundList =  soundGet.soundGet();
+               soundList =  soundGet.soundGet(curPage);
                for (Sound sound : soundList)
                {
                    Log.e("qqqqqqqqqq",sound.getSoundAuthor());
@@ -98,7 +109,38 @@ public class SoundFragment extends BaseFragment {
         recyclerView = (RecyclerView) mView.findViewById(R.id.sound_recyclerview);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
         recyclerView.setLayoutManager(layoutManager);
-
+        RefreshLayout refreshLayout = (RefreshLayout) mView.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Scale));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(false/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                moreSound();
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
         return mView;
+    }
+
+    private void moreSound()
+    {
+        curPage++;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Sound> moreSound = soundGet.soundGet(curPage);
+                Message message = new Message();
+                message.what = 4;
+                Bundle bundle2 = new Bundle();
+                bundle2.putParcelableArrayList("bundle2",moreSound);
+                message.setData(bundle2);
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 }
