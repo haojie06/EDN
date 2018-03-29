@@ -1,6 +1,9 @@
 package com.example.haojie06.everydayn.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +15,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.haojie06.everydayn.MainActivity;
 import com.example.haojie06.everydayn.R;
 import com.example.haojie06.everydayn.object.Sound;
+import com.example.haojie06.everydayn.view.SoundFragment;
+import com.example.haojie06.everydayn.view.SoundPlay;
 
 import java.util.List;
 
@@ -54,7 +60,24 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
             mContex = parent.getContext();
         }
         View view = LayoutInflater.from(mContex).inflate(R.layout.sound_item,parent,false);
-        return new  ViewHolder(view);
+        //设置item点击监听
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Sound sound = mSoundList.get(position);
+                Intent go = new Intent(mContex, SoundPlay.class);
+                go.putExtra("playSound",sound);
+
+                Glide.with(mContex).load(sound.getSoundPicUrl()).centerCrop().preload();
+               // mContex.startActivity(go, ActivityOptions.makeSceneTransitionAnimation((MainActivity) mContex).toBundle());
+                mContex.startActivity(go, ActivityOptions.makeSceneTransitionAnimation((MainActivity)mContex,view, "soundImg").toBundle());
+
+            }
+        });
+        return  holder;
     }
 
     @Override
@@ -62,7 +85,9 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         Sound sound = mSoundList.get(position);
         holder.titleView.setText(sound.getSoundTitle());
         holder.aaView.setText(sound.getSoundAuthor());
-        Glide.with(mContex).load(sound.getSoundPicUrl()).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageView);
+        Glide.with(mContex).load(sound.getSoundPicUrl()).centerCrop().preload();
+        Glide.with(mContex).load(sound.getSoundPicUrl()).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageView);
+
     }
 
     @Override

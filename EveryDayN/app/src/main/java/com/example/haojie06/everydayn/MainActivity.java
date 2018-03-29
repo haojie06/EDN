@@ -1,6 +1,7 @@
 package com.example.haojie06.everydayn;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         initView();
         initData();
@@ -70,8 +74,9 @@ public class MainActivity extends AppCompatActivity  {
                 item.setCheckable(false);
                 Toast.makeText(MainActivity.this,"加载文章",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, ArticleCatalog.class);
-                startActivity(intent);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
             }
+
             else if (id == R.id.download_aboutme)
             {
                 item.setCheckable(false);

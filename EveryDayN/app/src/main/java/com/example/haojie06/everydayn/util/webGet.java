@@ -9,13 +9,15 @@ import com.example.haojie06.everydayn.object.Articles;
 import com.example.haojie06.everydayn.object.Sound;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -24,7 +26,6 @@ import java.util.List;
 
 public class webGet {
     String url;
-
     public webGet(String url) {
 
         this.url = url;
@@ -76,13 +77,27 @@ public class webGet {
            //  Elements picLinks = doc.select("img[src]");
              for(Element e : soundLinks)
              {
+                 Element f = e;
+                 String soundUrl1 = "http://voice.meiriyiwen.com/" + f.select("div.list_box").select("a").attr("href");
                  String title = e.select("div.list_author").select("a").text();
                  String name = e.select("div.author_name").text();
                  String picUrl = "http://voice.meiriyiwen.com" + e.select("a").next().select("img").attr("src").replace("_250","");
+                 Document doc2 = Jsoup.connect(soundUrl1).get();
+                 Elements sourceElement = doc2.getElementById("voice_show").select("p.p_file").select("embed");
+                 f = sourceElement.first();
+                 String soundUrl2,parseUrl;
+                 soundUrl2 = sourceElement.get(0).attr("src");
+                 String[] a = soundUrl2.split("=");
+                 parseUrl = new String(android.util.Base64.decode(a[1], android.util.Base64.DEFAULT));
+               Log.e("----------声音一级URL",parseUrl);
+                 Log.e("----------声音一级URL",soundUrl1);
+                 Log.e("----------声音2级URL",soundUrl2);
+                 Log.e("----------声音2级URL",soundUrl2);
                  Sound sound = new Sound();
                  sound.setSoundTitle(title);
                  sound.setSoundAuthor(name);
                  sound.setSoundPicUrl(picUrl);
+                 sound.setSoundSoundUrl(parseUrl);
                  soundList.add(sound);
              }
         }catch (Exception ex){

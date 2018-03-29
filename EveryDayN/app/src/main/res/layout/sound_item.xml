@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:id="@+id/sound_picture"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:transitionName="soundImg"/>
         <TextView
             android:id="@+id/sound_title"
             android:layout_width="match_parent"
