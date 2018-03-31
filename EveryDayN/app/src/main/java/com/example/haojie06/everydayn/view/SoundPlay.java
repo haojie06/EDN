@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +38,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class SoundPlay extends AppCompatActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener {
+public class SoundPlay extends AppCompatActivity  {// implements View.OnClickListener,SeekBar.OnSeekBarChangeListener
     Uri playUri = null;
     Button play, pause, stop;
     SeekBar mSeekBar;
@@ -45,6 +47,7 @@ public class SoundPlay extends AppCompatActivity implements View.OnClickListener
     ImageView imageView;
     LinearLayout linearLayout;
     MediaPlayer mediaPlayer;
+    WebView webView;
     boolean hadDestroy = false;
 
     Handler mHandler = new Handler() {
@@ -89,13 +92,19 @@ public class SoundPlay extends AppCompatActivity implements View.OnClickListener
         //  getWindow().setEnterTransition(new Explode().setDuration(500));
         //  getWindow().setExitTransition(new Fade().setDuration(50));
 
-
         playSound = (Sound) getIntent().getParcelableExtra("playSound");
         setContentView(R.layout.activity_sound_play);
+        webView = (WebView) findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.scrollTo(0,165);
+        webView.loadUrl(playSound.getSoundSoundUrl());
         imageView = (ImageView) findViewById(R.id.soundPlayPic);
         TextView textView = (TextView) findViewById(R.id.soundPlayWord);
         textView.setText(playSound.getSoundAuthor());
+
         Glide.with(SoundPlay.this).load(playSound.getSoundPicUrl()).into(imageView);
+      /*
         play = (Button) findViewById(R.id.play);
         pause = (Button) findViewById(R.id.pause);
         stop = (Button) findViewById(R.id.stop);
@@ -107,14 +116,12 @@ public class SoundPlay extends AppCompatActivity implements View.OnClickListener
         pause.setOnClickListener(this);
         stop.setOnClickListener(this);
         mediaPlayer = new MediaPlayer();
-        playUri = Uri.parse( "http://sc1.111ttt.cn/2018/1/03/13/396131232171.mp3");
 
-        Log.e("URI----------", playUri.getPath());
         preparePlayer();
-
+*/
     }
 
-
+/*
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -167,10 +174,10 @@ public class SoundPlay extends AppCompatActivity implements View.OnClickListener
 
     void preparePlayer() {
         try {
-           // mediaPlayer.setDataSource(" http://sc1.111ttt.cn/2018/1/03/13/396131232171.mp3");
-            mediaPlayer.setDataSource(SoundPlay.this,playUri);
+            String what = playSound.getSoundSoundUrl();
+           mediaPlayer.setDataSource(playSound.getSoundSoundUrl());
            // AssetFileDescriptor fd = getAssets().openFd("123.mp3");
-           // mediaPlayer.setDataSource( fd.getFileDescriptor(), fd.getStartOffset(), fd.getLength());
+            //mediaPlayer.setDataSource( fd.getFileDescriptor(), fd.getStartOffset(), fd.getLength());
 
             mediaPlayer.prepareAsync();
 
@@ -191,5 +198,5 @@ public class SoundPlay extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-
+*/
 }

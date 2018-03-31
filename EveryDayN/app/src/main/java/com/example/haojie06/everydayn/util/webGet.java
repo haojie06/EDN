@@ -6,6 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.haojie06.everydayn.object.Articles;
+import com.example.haojie06.everydayn.object.Books;
 import com.example.haojie06.everydayn.object.Sound;
 
 import org.jsoup.Jsoup;
@@ -26,6 +27,10 @@ import java.util.List;
 
 public class webGet {
     String url;
+
+    public webGet() {
+    }
+
     public webGet(String url) {
 
         this.url = url;
@@ -89,6 +94,8 @@ public class webGet {
                  soundUrl2 = sourceElement.get(0).attr("src");
                  String[] a = soundUrl2.split("=");
                  parseUrl = new String(android.util.Base64.decode(a[1], android.util.Base64.DEFAULT));
+
+                 //由于播放器暂时无法播放网络音频，先使用Webview代替
                Log.e("----------声音一级URL",parseUrl);
                  Log.e("----------声音一级URL",soundUrl1);
                  Log.e("----------声音2级URL",soundUrl2);
@@ -97,7 +104,7 @@ public class webGet {
                  sound.setSoundTitle(title);
                  sound.setSoundAuthor(name);
                  sound.setSoundPicUrl(picUrl);
-                 sound.setSoundSoundUrl(parseUrl);
+                 sound.setSoundSoundUrl(soundUrl1);
                  soundList.add(sound);
              }
         }catch (Exception ex){
@@ -105,6 +112,38 @@ public class webGet {
             ex.printStackTrace();}
         return soundList;
     }
+
+    public ArrayList<Books> getBooks(int page)
+    {
+        String getUrl = "http://book.meiriyiwen.com/book?page=" + String.valueOf(page);
+        ArrayList<Books> booksList = new ArrayList<Books>();
+        Document doc = null;
+        try{
+            doc = Jsoup.connect(getUrl).get();
+            Elements booklinks = doc.getElementsByClass("book-bg");
+            Elements authorlinks = doc.getElementsByClass("book-author");
+            int count = 0;
+            for(Element e : booklinks)
+            {
+
+                Books books = new Books();
+                books.setBookAuthor(authorlinks.get(count).text());
+                books.setBookTitle(e.attr("title"));
+
+                String picurl = "http://book.meiriyiwen.com" + e.select("img").attr("src");
+                books.setBookPicUrl(picurl);
+                Log.e("书名",books.getBookPicUrl());
+                booksList.add(books);
+                count++;
+
+            }
+
+        }catch (Exception ex){ex.printStackTrace();
+        Log.e("error-----------","获取目录失败");}
+        return  booksList;
+
+    }
+
 
 }
 

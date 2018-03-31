@@ -94,13 +94,13 @@ public class ArticleFragment extends BaseFragment {
             public void onRefresh(RefreshLayout refreshlayout) {
 
                 refreshArticle();
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                refreshlayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                refreshlayout.finishLoadMore(1000/*,false*/);//传入false表示加载失败
             }
         });
         //点击收藏按钮将文章下载到本地

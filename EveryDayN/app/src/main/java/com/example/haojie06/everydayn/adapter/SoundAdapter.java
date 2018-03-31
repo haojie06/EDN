@@ -62,7 +62,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         View view = LayoutInflater.from(mContex).inflate(R.layout.sound_item,parent,false);
         //设置item点击监听
         final ViewHolder holder = new ViewHolder(view);
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
