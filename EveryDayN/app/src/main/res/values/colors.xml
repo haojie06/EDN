@@ -8,5 +8,6 @@
     <color name="purp">#602cdb</color>
     <color name="deepBlue">#044988</color>
     <color name="shadowBlue">#45a0f4</color>
+    <color name="black">#000000</color>
 
 </resources>

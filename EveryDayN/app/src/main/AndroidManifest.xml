@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <meta-data
         android:name="com.example.haojie06.everydayn.util.GlideConfiguration"
         android:value="GlideModule" />
@@ -26,7 +27,9 @@
         </activity>
         <activity android:name=".view.ArticleCatalog" />
         <activity android:name=".view.ArticleShow" />
-        <activity android:name=".view.SoundPlay"></activity>
+        <activity android:name=".view.SoundPlay" />
+        <activity android:name=".view.BookCatalog" />
+        <activity android:name=".view.DialogShow"></activity>
     </application>
 
 </manifest>

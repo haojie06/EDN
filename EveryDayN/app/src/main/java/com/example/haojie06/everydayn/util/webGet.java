@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.haojie06.everydayn.object.Articles;
 import com.example.haojie06.everydayn.object.Books;
+import com.example.haojie06.everydayn.object.CatalogIt;
 import com.example.haojie06.everydayn.object.Sound;
 
 import org.jsoup.Jsoup;
@@ -129,7 +130,7 @@ public class webGet {
                 Books books = new Books();
                 books.setBookAuthor(authorlinks.get(count).text());
                 books.setBookTitle(e.attr("title"));
-
+                books.setBookCatalog("http://book.meiriyiwen.com" + e.attr("href"));
                 String picurl = "http://book.meiriyiwen.com" + e.select("img").attr("src");
                 books.setBookPicUrl(picurl);
                 Log.e("书名",books.getBookPicUrl());
@@ -142,6 +143,42 @@ public class webGet {
         Log.e("error-----------","获取目录失败");}
         return  booksList;
 
+    }
+
+    public ArrayList<CatalogIt> getBookCatalog(String catDialog)
+    {   ArrayList<CatalogIt> sendList = new ArrayList<>();
+        try {
+            Document doc;
+            doc = Jsoup.connect(catDialog).get();
+            Elements elements = doc.getElementsByClass("chapter-list").select("li");
+            for(Element e : elements)
+            {
+                CatalogIt cat = new CatalogIt();
+                cat.setName(e.text());
+                cat.setUrl("http://book.meiriyiwen.com" + e.select("li").select("a").attr("href"));
+                sendList.add(cat);
+            }
+        }catch (Exception ex){ex.printStackTrace();}
+
+         return sendList;
+    }
+
+    public String getArticle(String u)
+    {String sendString = null;
+        try {
+            Document doc;
+            doc = Jsoup.connect(u).get();
+            sendString = doc.select("div.chapter-bg").text();
+
+            /*for(Element e : elements)
+            {
+                CatalogIt cat = new CatalogIt();
+                cat.setName(e.text());
+                cat.setUrl("http://book.meiriyiwen.com" + e.select("li").select("a").attr("href"));
+                sendList.add(cat);
+            }*/
+        }catch (Exception ex){ex.printStackTrace();}
+        return sendString;
     }
 
 

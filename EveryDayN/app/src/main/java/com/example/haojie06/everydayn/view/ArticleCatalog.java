@@ -57,8 +57,6 @@ String[] title, name;
         ListView listView = (ListView) findViewById(R.id.article_list);
         listView.setAdapter(adapter);
 
-
-
     }
 }
 
