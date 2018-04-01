@@ -22,7 +22,7 @@ public class DialogShow extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle = msg.getData();
                     getContent = bundle.getString("content");
-                    content = (TextView) findViewById(R.id.showContent);
+
                     content.setText(getContent);
                     break;
 
@@ -36,7 +36,7 @@ public class DialogShow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_show);
       title =  (TextView) findViewById(R.id.showCatTitle);
-
+      content = (TextView) findViewById(R.id.showCat);
      final String url = getIntent().getStringExtra("dialogshow");
      new Thread(new Runnable() {
          @Override
@@ -52,5 +52,6 @@ public class DialogShow extends AppCompatActivity {
              handler.sendMessage(message);
          }
      }).start();
+
     }
 }

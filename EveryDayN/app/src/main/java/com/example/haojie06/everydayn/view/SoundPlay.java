@@ -89,8 +89,6 @@ public class SoundPlay extends AppCompatActivity  {// implements View.OnClickLis
 
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        //  getWindow().setEnterTransition(new Explode().setDuration(500));
-        //  getWindow().setExitTransition(new Fade().setDuration(50));
 
         playSound = (Sound) getIntent().getParcelableExtra("playSound");
         setContentView(R.layout.activity_sound_play);

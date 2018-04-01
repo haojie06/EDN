@@ -71,7 +71,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
                 go.putExtra("playSound",sound);
 
                 Glide.with(mContex).load(sound.getSoundPicUrl()).centerCrop().preload();
-               // mContex.startActivity(go, ActivityOptions.makeSceneTransitionAnimation((MainActivity) mContex).toBundle());
                 mContex.startActivity(go, ActivityOptions.makeSceneTransitionAnimation((MainActivity)mContex,view, "soundImg").toBundle());
 
             }
